@@ -1,0 +1,9 @@
+.DS_Store
+.bsp
+.metals
+.scala-build
+.vscode
+.scala-build
+*.jar
+server/kill.sh
+.idea

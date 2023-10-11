@@ -1,0 +1,67 @@
+name: Build Client
+
+on:
+  pull_request:
+    branches:
+      - '*'
+  push:
+    branches:
+      - '*'
+
+env:
+  REGISTRY_IMAGE: kindservices/datamesh-service-registry-client
+      
+jobs:
+  build-client:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1        
+      - uses: coursier/cache-action@v6.3
+      - uses: VirtusLab/scala-cli-setup@v0.1
+      - name: Scalafmt check
+        working-directory: ./client
+        run: |
+          scala-cli fmt --check . || (
+            echo "To format code run"
+            echo "  scala-cli fmt ."
+            exit 1
+          )
+
+      - name: Build App
+        working-directory: ./client
+        run: scala-cli --power package Client.scala -o client.jar --assembly --main-class heartbeat
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Docker Hub
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      #https://github.com/docker/build-push-action    
+      - name: Build if Branch
+        if: github.ref != 'refs/heads/main'
+        uses: docker/build-push-action@v5
+        with:
+          context: ./client
+          platforms: linux/amd64
+          push: false
+          tags: ${{ env.REGISTRY_IMAGE }}:${{github.run_number}}
+      - name: Build if Main
+        if: github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v5
+        with:
+          context: ./client
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ${{ env.REGISTRY_IMAGE }}:latest
+            ${{ env.REGISTRY_IMAGE }}:${{github.run_number}}
+  

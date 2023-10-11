@@ -1,0 +1,6 @@
+#!/usr/bin/env -S scala-cli shebang -S 3  --dependency com.lihaoyi::requests:0.8.0
+
+val hostPort = args.lift(1).orElse(sys.env.get("HOSTPORT")).getOrElse("http://localhost:8080")
+
+val url = s"$hostPort/api/v1/registry"
+println (requests.get(url))
