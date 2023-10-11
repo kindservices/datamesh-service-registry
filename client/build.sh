@@ -13,11 +13,12 @@ buildLocally() {
 }
 
 testRegisterLocal() {
-    scala-cli Client.scala --main-class register -- testOne '{"webComponent":{"jsUrl":"path/to/component.js","cssUrl":"path/to/component.css","componentId":"some-component"},"label":"some friendly label","tags":{"env":"prod","createdBy":"somebody"}}' http://localhost:8080
+    scala-cli Client.scala --main-class registerArgs -- testOne '{"webComponent":{"jsUrl":"path/to/component.js","cssUrl":"path/to/component.css","componentId":"some-component"},"label":"some friendly label","tags":{"env":"prod","createdBy":"somebody"}}' http://localhost:8080
+    # scala-cli Client.scala --main-class register -- testOne '{"webComponent":{"jsUrl":"path/to/component.js","cssUrl":"path/to/component.css","componentId":"some-component"},"label":"some friendly label","tags":{"env":"prod","createdBy":"somebody"}}' http://localhost:8080
 }
 
 testHeartbeatLocal() {
-    scala-cli Client.scala --main-class heartbeat -- testHeartbeat '{"webComponent":{"jsUrl":"path/to/component.js","cssUrl":"path/to/component.css","componentId":"some-component"},"label":"some friendly label","tags":{"env":"prod","createdBy":"somebody"}}' http://localhost:8080 2
+    scala-cli Client.scala --main-class heartbeatArgs -- testHeartbeat '{"webComponent":{"jsUrl":"path/to/component.js","cssUrl":"path/to/component.css","componentId":"some-component"},"label":"some friendly label","tags":{"env":"prod","createdBy":"somebody"}}' http://localhost:8080 2
 }
 
 run() {
