@@ -59,12 +59,13 @@ installArgo() {
     BRANCH=${BRANCH:-`git rev-parse --abbrev-ref HEAD`}
 
     echo "creating $APP in $BRANCH"
-    set -x
 
+    kubectl create namespace data-mesh || echo "couldn't create data-mesh namespace"
+    
     # beast mode :-)
     argocd app create $APP \
     --repo https://github.com/kindservices/idealab-service-registry.git \
-    --path service-registry/server/k8s \
+    --path server/k8s \
     --dest-server https://kubernetes.default.svc \
     --dest-namespace data-mesh \
     --sync-policy automated \
