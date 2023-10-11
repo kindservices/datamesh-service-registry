@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-sidecar
+  namespace: data-mesh
+spec:
+  containers:
+    - name: server-registry-sidecar
+      image: kindservices/service-registry-client:0.0.2
+      imagePullPolicy: Always
+      env:
+        - name: HOSTPORT
+          value: "http://service-registry-service.data-mesh:8080"
+        - name: ID
+          value: client-test
+        - name: FREQUENCY_IN_SECONDS
+          value: "3"
+        - name: BODY
+          value: '{"webComponent":{"jsUrl":"http://test-sidecar.data-mesh:8080/bundle.js","cssUrl":"http://test-sidecar-web.data-mesh:8080/bundle.css","componentId":"<just-a-test></just-a-test>"},"label":"pinot OLAP","tags":{"env":"prod"}}'
+      resources:
+        limits:
+          memory: "64Mi"
+          cpu: "100m"
