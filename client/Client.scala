@@ -9,7 +9,7 @@ def env(key: String) = sys.env.getOrElse(
 )
 
 // a main endpoint which takes its args from its inputs
-@main def registerArgs(id: String, body : String, hostport : String) = register(id, body, hostport)
+@main def registerArgs(id: String, body: String, hostport: String) = register(id, body, hostport)
 
 @main def register(
     id: String = env("ID"),
@@ -22,11 +22,11 @@ def env(key: String) = sys.env.getOrElse(
   response.ensuring(_.statusCode == 200, s"$url returned ${response.statusCode}: $response")
 }
 
-@main def heartbeatArgs(id: String, body: String, hostPort: String, frequencyInSeconds: Int) = 
-    while (true) {
-      register(id, body, hostPort)
-      Thread.sleep(frequencyInSeconds * 1000)
-    }
+@main def heartbeatArgs(id: String, body: String, hostPort: String, frequencyInSeconds: Int) =
+  while (true) {
+    register(id, body, hostPort)
+    Thread.sleep(frequencyInSeconds * 1000)
+  }
 
 /** register at a fixed rate
   */
