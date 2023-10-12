@@ -11,13 +11,7 @@ The server is defined as a [kubernetes service](./server/k8s/server.yaml).
 We provide a convenience script for spinning it up, assuming you have [argocd installed](https://argo-cd.readthedocs.io/en/stable/).
 (If not, see [our docs](https://github.com/kindservices/local-kubernetes) on testing this out/installing argocd locally)
 
-Just run:
-```bash
-cd server
-make installArgo
-```
-
-And you should see it installing on your cluster:
+Just run `install.sh` and you should see it installing on your cluster:
 ![After Argo](docs/argo.png)
 
 # Local Usage
