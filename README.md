@@ -89,7 +89,7 @@ with the body being a register request
 # Design
 
 This service registry could work in its own right, but it was created to support a 
-the micro front-end design for the [Kind Serivces data mesh idea lab](https://www.kindservices.co.uk/idealab)
+the micro front-end design for the [Kind Serivces data mesh idea lab](https://www.kindservices.co.uk/idea-lab)
 
 
 ```mermaid
