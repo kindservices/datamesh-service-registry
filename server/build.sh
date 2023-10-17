@@ -64,7 +64,7 @@ installArgo() {
     
     # beast mode :-)
     argocd app create $APP \
-    --repo https://github.com/kindservices/idealab-service-registry.git \
+    --repo https://github.com/kindservices/datamesh-service-registry.git \
     --path server/k8s \
     --dest-server https://kubernetes.default.svc \
     --dest-namespace data-mesh \
