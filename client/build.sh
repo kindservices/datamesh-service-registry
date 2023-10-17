@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-export TAG=${TAG:-0.0.2}
+export TAG=${TAG:-local}
 export IMG=${IMG:-"kindservices/service-registry-client:$TAG"}
 
 # scala-cli --power package --docker App.scala --docker-from openjdk:11 --docker-image-repository service-registry
@@ -23,8 +23,4 @@ testHeartbeatLocal() {
 
 run() {
     docker run --rm -env HOST --env ID --env BODY -d $IMG
-}
-
-push() {
-    docker push $IMG
 }
