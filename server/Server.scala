@@ -11,6 +11,53 @@ import upickle.*
 import upickle.default.*
 import upickle.default.{ReadWriter => RW, macroRW}
 
+// format: off
+/**
+ * Moving to contract-first would probably be the first tech debt to pay down,
+ * but for now, the response for 
+ * 
+ * GET /api/v1/registry is:
+ * 
+ * {{{
+ * [
+    {
+        "id": "testOne",
+        "service": {
+            "webComponent": {
+                "jsUrl": "path/to/component.js",
+                "cssUrl": "path/to/component.css",
+                "componentId": "some-component"
+            },
+            "label": "some friendly label",
+            "tags": {
+                "env": "prod",
+                "createdBy": "somebody"
+            }
+        },
+        "lastUpdated": "2023-10-21T20:53:53.893639Z"
+    },
+    {
+        "id": "testHeartbeat",
+        "service": {
+            "webComponent": {
+                "jsUrl": "path/to/component.js",
+                "cssUrl": "path/to/component.css",
+                "componentId": "some-component"
+            },
+            "label": "some friendly label",
+            "tags": {
+                "env": "prod",
+                "createdBy": "somebody"
+            }
+        },
+        "lastUpdated": "2023-10-21T20:53:58.565700Z"
+    }
+]
+ * }}}
+ * 
+ * 
+ */
+// format: on
 object model {
 
   /** @param jsUrl

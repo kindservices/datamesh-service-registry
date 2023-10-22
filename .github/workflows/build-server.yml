@@ -38,10 +38,11 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker Buildx
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      if: github.event_name == 'push'
       uses: docker/setup-buildx-action@v3
+    - name: Debug
+      run: echo "github.event_name is {{github.event_name}}"
     - name: Login to Docker Hub
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -53,9 +54,9 @@ jobs:
       with:
         context: ./server
         platforms: linux/amd64
-        push: false
-        tags: ${{ env.REGISTRY_IMAGE }}:${{github.run_number}}
-    - name: Build if Main
+        push: true
+        tags: ${{ env.REGISTRY_IMAGE }}:build-${{github.run_number}}
+    - name: Optional Push Latest
       if: github.ref == 'refs/heads/main'
       uses: docker/build-push-action@v5
       with:
