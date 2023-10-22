@@ -11,6 +11,7 @@ import upickle.*
 import upickle.default.*
 import upickle.default.{ReadWriter => RW, macroRW}
 
+// format: off
 /**
  * Moving to contract-first would probably be the first tech debt to pay down,
  * but for now, the response for 
@@ -53,7 +54,10 @@ import upickle.default.{ReadWriter => RW, macroRW}
     }
 ]
  * }}}
+ * 
+ * 
  */
+// format: on
 object model {
 
   /** @param jsUrl
