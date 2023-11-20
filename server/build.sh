@@ -2,6 +2,9 @@
 export TAG=${TAG:-0.0.1}
 export IMG=${IMG:-kindservices/service-registry:$TAG}
 export PORT=${PORT:-8080}
+export APP=${APP:-service-registry}
+BRANCH=${BRANCH:-`git rev-parse --abbrev-ref HEAD`}
+
 
 # scala-cli --power package --docker App.scala --docker-from openjdk:11 --docker-image-repository service-registry
 
@@ -48,6 +51,9 @@ EOL
     echo "Running on port $PORT --- stop server using ./kill.sh"
 }
 
+uninstallArgo() {
+    argocd app delete $APP --cascade
+}
 
 # assumes argocd (which argocd || brew install argocd) installed and logged in (argocd login localhost:$ARGO_PORT --username admin --password $MY_ARGO_PWD  --insecure --skip-test-tls )
 #
@@ -55,12 +61,9 @@ EOL
 # https://github.com/easy-being-green/argo-drone/blob/main/argo/argo.sh
 #
 installArgo() {
-    APP=${APP:-service-registry}
-    BRANCH=${BRANCH:-`git rev-parse --abbrev-ref HEAD`}
-
     echo "creating $APP in $BRANCH"
 
-    kubectl create namespace data-mesh || echo "couldn't create data-mesh namespace"
+    kubectl create namespace data-mesh 2> /dev/null
     
     # beast mode :-)
     argocd app create $APP \
