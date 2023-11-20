@@ -13,6 +13,8 @@ push: buildDocker
 # installs this app using argo, pointing at the current branch (e.g. master, dev, whatever git branch you're currently on)
 installArgo:
 	source ./build.sh && installArgo
+uninstallArgo:
+	source ./build.sh && uninstallArgo
 test:
 	source ./build.sh && test
 buildLocally:
